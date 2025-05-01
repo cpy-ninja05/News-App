@@ -148,6 +148,9 @@ export default function LoginCard({ switchToRegister, onLoginSuccess }) {
         >
           Sign In
         </button>
+        {errors.server && (
+          <p className="text-red-500 text-sm mt-2 text-center">Email or password is not valid. Try again.</p>
+        )}
       </div>
       
       <div className="mt-6 text-center">
