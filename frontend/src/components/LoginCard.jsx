@@ -1,5 +1,6 @@
+import Axios from 'axios';
+import { Eye, EyeOff, Lock, Mail } from 'lucide-react';
 import { useState } from 'react';
-import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 
 export default function LoginCard({ switchToRegister, onLoginSuccess }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -36,7 +37,7 @@ export default function LoginCard({ switchToRegister, onLoginSuccess }) {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit =async (e) => {
     e.preventDefault();
     
     const formErrors = validateForm();
@@ -47,13 +48,25 @@ export default function LoginCard({ switchToRegister, onLoginSuccess }) {
     
     // Here you would typically handle the login API call
     console.log('Login data:', formData);
-    
-    // For demo purposes, alert the user
-    alert('Login successful! Redirecting to dashboard...');
-    
-    // Call the onLoginSuccess function to update authentication state
-    if (onLoginSuccess) {
-      onLoginSuccess();
+
+    try {
+      const response = await Axios.post('http://localhost:3000/register-login/login', formData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true,
+      });
+      console.log('Login response:', response.data);
+      if (response.data.success) {
+        // Handle successful login (e.g., redirect to dashboard)
+        alert('Login successful! Redirecting to dashboard...');
+      } else {
+        // Handle login error
+        setErrors({ ...errors, server: response.data.message });
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      setErrors({ ...errors, server: 'An error occurred. Please try again.' });
     }
   };
 

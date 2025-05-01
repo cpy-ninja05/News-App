@@ -1,5 +1,6 @@
+import Axios from 'axios';
+import { Eye, EyeOff, Lock, Mail, User } from 'lucide-react';
 import { useState } from 'react';
-import { Mail, Lock, User, Eye, EyeOff } from 'lucide-react';
 
 export default function RegisterCard({ switchToLogin }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -31,7 +32,7 @@ export default function RegisterCard({ switchToLogin }) {
     
     if (!formData.email.trim()) {
       newErrors.email = 'Email is required';
-    } else if (!/\\S+@\\S+\\.\\S+/.test(formData.email)) {
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Email is invalid';
     }
     
@@ -48,7 +49,7 @@ export default function RegisterCard({ switchToLogin }) {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     const formErrors = validateForm();
@@ -59,10 +60,23 @@ export default function RegisterCard({ switchToLogin }) {
     
     // Here you would typically handle the registration API call
     console.log('Registration data:', formData);
-    
-    // For demo purposes, alert the user
-    alert('Registration successful! You can now log in.');
-    switchToLogin();
+
+    try {
+      const response = await Axios.post('http://localhost:3000/register-login/register', formData);
+      console.log('Registration response:', response.data);
+
+      if (response.data.success) {
+        // Handle successful registration (e.g., redirect to login)
+        alert('Registration successful! Redirecting to login...');
+        switchToLogin();
+      } else {
+        // Handle registration error
+        setErrors({ ...errors, server: response.data.message });
+      }
+    } catch (error) {
+      console.error('Registration error:', error);
+      setErrors({ ...errors, server: 'An error occurred. Please try again.' });
+    }
   };
 
   return (
