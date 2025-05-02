@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useState } from 'react';
 import LoginAndRegister from './pages/LoginAndRegister.jsx';
+import Preferences from './pages/Preferences.jsx';
 
 // Placeholder for Dashboard component - will be implemented later
 const Dashboard = () => {
@@ -39,7 +40,14 @@ export default function App() {
               <LoginAndRegister onLoginSuccess={handleLogin} />
           } 
         />
-        
+        <Route
+          path="/preferences"
+          element={
+            isAuthenticated ?
+              <Navigate to="/dashboard" replace /> :
+              <Preferences />
+          }
+        />
         {/* Protected routes */}
         <Route 
           path="/dashboard" 

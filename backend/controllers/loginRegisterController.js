@@ -26,9 +26,50 @@ const registerUser = async (req, res) => {
     const user = new User({ name, email, password: hashedPassword });
     await user.save();
 
+    // Generate JWT token
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+    // Set token in cookie
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'Strict',
+    });
+
     res.status(201).json({
       success: true,
       message: 'User registered successfully',
+      token,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error',
+    });
+  }
+};
+
+// Update user news preferences
+const updateUserPreferences = async (req, res) => {
+  const user = req.user; // from auth middleware
+  const { newsPreferences } = req.body;
+
+  try {
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found',
+      });
+    }
+
+    user.newsPreferences = newsPreferences || [];
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Preferences updated successfully',
+      newsPreferences: user.newsPreferences,
     });
   } catch (error) {
     console.error(error);
@@ -95,4 +136,5 @@ const logoutUser = (req, res) => {
   });
 };
 
-export { loginUser, logoutUser, registerUser };
+
+export { loginUser, logoutUser, registerUser , updateUserPreferences};

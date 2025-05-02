@@ -66,9 +66,8 @@ export default function RegisterCard({ switchToLogin }) {
       console.log('Registration response:', response.data);
 
       if (response.data.success) {
-        // Handle successful registration (e.g., redirect to login)
-        alert('Registration successful! Redirecting to login...');
-        switchToLogin();
+        // Redirect to preferences page after successful registration
+        window.location.href = '/preferences';
       } else {
         // Handle registration error
         setErrors({ ...errors, server: response.data.message });
