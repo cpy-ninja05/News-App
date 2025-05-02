@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
+import { useParams } from 'react-router-dom';
+
 
 const categories = [
   'Business',
@@ -17,6 +19,7 @@ export default function Preferences() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { email } = useParams();
 
   const toggleCategory = (category) => {
     if (selectedCategories.includes(category)) {
@@ -34,8 +37,8 @@ export default function Preferences() {
     setError('');
     setLoading(true);
     try {
-      const response = await Axios.patch(
-        'http://localhost:3000/register-login/preferences',
+      const response = await Axios.post(
+        `http://localhost:3000/register-login/preferences/${email}`,
         { newsPreferences: selectedCategories },
         { withCredentials: true }
       );

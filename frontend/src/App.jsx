@@ -41,7 +41,7 @@ export default function App() {
           } 
         />
         <Route
-          path="/preferences"
+          path="/preferences/:email"
           element={
             isAuthenticated ?
               <Navigate to="/dashboard" replace /> :

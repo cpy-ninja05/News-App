@@ -67,7 +67,7 @@ export default function RegisterCard({ switchToLogin }) {
 
       if (response.data.success) {
         // Redirect to preferences page after successful registration
-        window.location.href = '/preferences';
+        window.location.href = `/preferences/${formData.email}`;
       } else {
         // Handle registration error
         setErrors({ ...errors, server: response.data.message });

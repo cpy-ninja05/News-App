@@ -52,10 +52,12 @@ const registerUser = async (req, res) => {
 
 // Update user news preferences
 const updateUserPreferences = async (req, res) => {
-  const user = req.user; // from auth middleware
+  const { email } = req.params;
   const { newsPreferences } = req.body;
 
   try {
+    // Find user by email
+    const user = await User.findOne({ email });
     if (!user) {
       return res.status(404).json({
         success: false,
@@ -63,13 +65,13 @@ const updateUserPreferences = async (req, res) => {
       });
     }
 
-    user.newsPreferences = newsPreferences || [];
+    // Update news preferences
+    user.newsPreferences = newsPreferences;
     await user.save();
 
     res.status(200).json({
       success: true,
-      message: 'Preferences updated successfully',
-      newsPreferences: user.newsPreferences,
+      message: 'News preferences updated successfully',
     });
   } catch (error) {
     console.error(error);
