@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import connectDB from './config/db.js';
 import loginRegisterRoute from './routes/loginRegisterRoute.js';
+import newsRoute from './routes/newsRoute.js';
 
 dotenv.config(); // Only once, no need for a second call
 
@@ -25,6 +26,7 @@ connectDB();
 const PORT = process.env.PORT || 5000;
 
 app.use('/register-login', loginRegisterRoute);
+app.use('/news',newsRoute);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

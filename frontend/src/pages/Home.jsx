@@ -8,7 +8,7 @@ const Home = () => {
         const fetchCategories = async () => {
             try {
                 const response = await Axios.get('http://localhost:3000/news/categories', { withCredentials: true });
-                setSelectedCategories(response.data.categories);
+                setSelectedCategories(response.data);
             } catch (error) {
                 console.error('Error fetching categories:', error);
             }
