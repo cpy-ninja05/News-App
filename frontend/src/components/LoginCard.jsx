@@ -1,9 +1,10 @@
 import Axios from 'axios';
 import { Eye, EyeOff, Lock, Mail } from 'lucide-react';
 import { useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 export default function LoginCard({ switchToRegister, onLoginSuccess }) {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -39,7 +40,7 @@ export default function LoginCard({ switchToRegister, onLoginSuccess }) {
 
   const handleSubmit =async (e) => {
     e.preventDefault();
-    
+    navigate('/')
     const formErrors = validateForm();
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);

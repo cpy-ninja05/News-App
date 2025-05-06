@@ -2,65 +2,19 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { useState } from 'react';
 import LoginAndRegister from './pages/LoginAndRegister.jsx';
 import Preferences from './pages/Preferences.jsx';
-
-// Placeholder for Dashboard component - will be implemented later
-const Dashboard = () => {
-  return (
-    <div className="min-h-screen bg-gray-50 p-8">
-      <h1 className="text-2xl font-bold mb-4">News Dashboard</h1>
-      <p>Welcome to your personalized news feed!</p>
-      {/* News content will go here */}
-    </div>
-  );
-};
-
-export default function App() {
-  // Simple auth state - in a real app, you'd use context or state management library
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  
-  // Function to handle authentication status
-  const handleLogin = () => {
-    setIsAuthenticated(true);
-  };
-  
-  // Function to handle logout
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-  };
-  
+import Home from './pages/Home.jsx';
+function App() {
   return (
     <Router>
       <Routes>
-        {/* Public routes */}
-        <Route 
-          path="/login" 
-          element={
-            isAuthenticated ? 
-              <Navigate to="/dashboard" replace /> : 
-              <LoginAndRegister onLoginSuccess={handleLogin} />
-          } 
-        />
-        <Route
-          path="/preferences/:email"
-          element={
-            isAuthenticated ?
-              <Navigate to="/dashboard" replace /> :
-              <Preferences />
-          }
-        />
-        {/* Protected routes */}
-        <Route 
-          path="/dashboard" 
-          element={
-            isAuthenticated ? 
-              <Dashboard onLogout={handleLogout} /> : 
-              <Navigate to="/login" replace />
-          } 
-        />
-        
-        {/* Default redirect */}
-        <Route path="*" element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} replace />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<LoginAndRegister />} />
+        <Route path="/register" element={<LoginAndRegister  />} />
+        <Route path="/preferences" element={<Preferences />} />
+        {/* Redirect to login if not authenticated */}
       </Routes>
     </Router>
   );
 }
+
+export default App;
