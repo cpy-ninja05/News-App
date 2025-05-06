@@ -58,7 +58,6 @@ export default function RegisterCard({ switchToLogin }) {
       return;
     }
     
-    // Here you would typically handle the registration API call
     console.log('Registration data:', formData);
 
     try {

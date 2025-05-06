@@ -1,8 +1,7 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { useState } from 'react';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import Home from './pages/Home.jsx';
 import LoginAndRegister from './pages/LoginAndRegister.jsx';
 import Preferences from './pages/Preferences.jsx';
-import Home from './pages/Home.jsx';
 function App() {
   return (
     <Router>
@@ -10,8 +9,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginAndRegister />} />
         <Route path="/register" element={<LoginAndRegister  />} />
-        <Route path="/preferences" element={<Preferences />} />
-        {/* Redirect to login if not authenticated */}
+        <Route path="/preferences/:email" element={<Preferences />} />
+    
       </Routes>
     </Router>
   );

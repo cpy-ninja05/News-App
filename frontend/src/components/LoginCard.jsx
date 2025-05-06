@@ -40,7 +40,6 @@ export default function LoginCard({ switchToRegister, onLoginSuccess }) {
 
   const handleSubmit =async (e) => {
     e.preventDefault();
-    navigate('/')
     const formErrors = validateForm();
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
@@ -59,8 +58,8 @@ export default function LoginCard({ switchToRegister, onLoginSuccess }) {
       });
       console.log('Login response:', response.data);
       if (response.data.success) {
-        // Handle successful login (e.g., redirect to dashboard)
         alert('Login successful! Redirecting to dashboard...');
+        navigate('/')
       } else {
         // Handle login error
         setErrors({ ...errors, server: response.data.message });
