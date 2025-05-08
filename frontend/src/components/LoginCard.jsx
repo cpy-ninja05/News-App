@@ -59,7 +59,7 @@ export default function LoginCard({ switchToRegister, onLoginSuccess }) {
       console.log('Login response:', response.data);
       if (response.data.success) {
         alert('Login successful! Redirecting to dashboard...');
-        navigate('/')
+        navigate('/home')
       } else {
         // Handle login error
         setErrors({ ...errors, server: response.data.message });
