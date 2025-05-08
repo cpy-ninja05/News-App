@@ -1,1 +1,8 @@
 @import "tailwindcss";
+
+@font-face {
+    font-family: 'NewYorkTimes';
+    src: url('/src/assets/font/Chomsky.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }

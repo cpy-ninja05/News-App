@@ -1,7 +1,6 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
 const categories = [
@@ -43,7 +42,7 @@ export default function Preferences() {
         { withCredentials: true }
       );
       if (response.data.success) {
-        navigate('/login');
+        navigate('/loginandregister');
       } else {
         setError('Failed to save preferences. Please try again.');
       }

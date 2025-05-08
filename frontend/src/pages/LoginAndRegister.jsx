@@ -1,7 +1,7 @@
+import { Newspaper } from 'lucide-react';
 import { useState } from 'react';
 import LoginCard from '../components/LoginCard.jsx';
 import RegisterCard from '../components/RegisterCard.jsx';
-import { Newspaper } from 'lucide-react';
 
 export default function LoginAndRegister({ onLoginSuccess }) {
   const [isLoginView, setIsLoginView] = useState(true);
@@ -14,7 +14,7 @@ export default function LoginAndRegister({ onLoginSuccess }) {
       <div className="w-full max-w-md mb-8 flex flex-col items-center">
         <div className="flex items-center gap-2 mb-2">
           <Newspaper size={32} className="text-blue-600" />
-          <h1 className="text-3xl font-bold text-gray-800">NewsFlash</h1>
+          <h1 className="text-3xl font-bold font-serif text-gray-800"><span className='font-[NewYorkTimes] text-4xl'>The </span>CHRONICLE</h1>
         </div>
         <p className="text-gray-600 text-center">Your personalized news recommendation platform</p>
       </div>

@@ -1,7 +1,6 @@
-import React from 'react'
-import { useEffect, useState } from 'react';
-import Navbar from '../components/Navbar.jsx';
 import Axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import Navbar from '../components/Navbar.jsx';
 import NewsSection from '../components/NewsSection.jsx';
 const Home = () => {
     const [selectedCategories, setSelectedCategories] = useState([]);
@@ -21,7 +20,6 @@ const Home = () => {
   return (
     <>
         <Navbar />
-        <div>Hello</div>
         {console.log(selectedCategories)}
         {selectedCategories.map((category) => (
             <NewsSection key={category} category={category} apiKey={import.meta.env.VITE_API_KEY} title={category.toUpperCase()} />
