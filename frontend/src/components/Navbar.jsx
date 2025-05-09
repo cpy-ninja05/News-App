@@ -1,8 +1,10 @@
 import { Menu, Search } from 'lucide-react';
 import { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
   const [currentDate] = useState(
     new Date().toLocaleDateString('en-US', {
       weekday: 'long',
@@ -13,14 +15,14 @@ function Navbar() {
   );
 
   const navItems = [
-    'Home',
-    'Business',
-    'Entertainment',
-    'General',
-    'Health',
-    'Science',
-    'Sports',
-    'Technology',
+    { name: 'Home', path: '/home' },
+    { name: 'Business', path: '/business' },
+    { name: 'Entertainment', path: '/entertainment' },
+    { name: 'General', path: '/general' },
+    { name: 'Health', path: '/health' },
+    { name: 'Science', path: '/science' },
+    { name: 'Sports', path: '/sports' },
+    { name: 'Technology', path: '/technology' },
   ];
 
   return (
@@ -43,11 +45,11 @@ function Navbar() {
 
       {/* Newspaper title */}
       <div className="flex justify-center py-6 text-center">
-        <div className="text-4xl md:text-5xl font-bold tracking-tighter">
+        <Link to="/home" className="text-4xl md:text-5xl font-bold tracking-tighter">
           <span className="font-[NewYorkTimes] text-5xl md:text-6xl">The </span>
           <span className="font-black uppercase">CHRONICLE</span>
           <span className="text-2xl md:text-3xl align-top">*</span>
-        </div>
+        </Link>
       </div>
 
       {/* Navigation menu */}
@@ -55,9 +57,17 @@ function Navbar() {
         {/* Desktop menu */}
         <nav className="hidden md:flex justify-center space-x-6 px-4 py-3">
           {navItems.map((item, index) => (
-            <a key={index} href="#" className="text-gray-800 hover:text-gray-600">
-              {item}
-            </a>
+            <Link
+              key={index}
+              to={item.path}
+              className={`transition-colors ${
+                location.pathname === item.path
+                  ? 'text-blue-600 font-semibold'
+                  : 'text-gray-800 hover:text-gray-600'
+              }`}
+            >
+              {item.name}
+            </Link>
           ))}
         </nav>
 
@@ -65,9 +75,18 @@ function Navbar() {
         {isMenuOpen && (
           <nav className="flex flex-col md:hidden px-4 py-3 space-y-2 bg-white shadow">
             {navItems.map((item, index) => (
-              <a key={index} href="#" className="text-gray-800 hover:text-gray-600">
-                {item}
-              </a>
+              <Link
+                key={index}
+                to={item.path}
+                className={`transition-colors ${
+                  location.pathname === item.path
+                    ? 'text-blue-600 font-semibold'
+                    : 'text-gray-800 hover:text-gray-600'
+                }`}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {item.name}
+              </Link>
             ))}
           </nav>
         )}
