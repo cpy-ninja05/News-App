@@ -6,7 +6,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 const categories = [
   'Business',
   'Entertainment',
-  'General',
   'Health',
   'Science',
   'Sports',

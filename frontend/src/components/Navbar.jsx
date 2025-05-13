@@ -22,7 +22,6 @@ function Navbar() {
     { name: "Home", path: "/home" },
     { name: "Business", path: "/business" },
     { name: "Entertainment", path: "/entertainment" },
-    { name: "General", path: "/general" },
     { name: "Health", path: "/health" },
     { name: "Science", path: "/science" },
     { name: "Sports", path: "/sports" },
