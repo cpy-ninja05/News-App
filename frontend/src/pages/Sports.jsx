@@ -129,12 +129,12 @@ const Sports = () => {
                     e.target.src = '/api/placeholder/800/400';
                   }}
                 />
-                <div className="absolute bottom-0 left-0 bg-blue-600 text-white px-3 py-1 text-sm font-medium">
+                <div className="absolute bottom-0 left-0 bg-[#1d2d44] text-white px-3 py-1 text-sm font-medium">
                   Featured
                 </div>
               </div>
               <div className="p-6">
-                <h2 className="text-2xl font-bold mb-2 hover:text-blue-600 transition-colors">{mainArticle.title}</h2>
+                <h2 className="text-2xl font-bold mb-2 hover:text-[#1d2d44] transition-colors">{mainArticle.title}</h2>
                 <p className="text-gray-500 text-sm mb-3">{new Date(mainArticle.publishedAt).toLocaleDateString()}</p>
                 <p className="text-gray-700">{mainArticle.description}</p>
                 <div className="mt-4">
@@ -142,7 +142,7 @@ const Sports = () => {
                     href={mainArticle.url} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-blue-600 font-medium hover:text-blue-800 transition-colors"
+                    className="text-[#1d2d44] font-medium hover:text-[#748cab] transition-colors"
                   >
                     Read full story →
                   </a>
@@ -168,7 +168,7 @@ const Sports = () => {
                     }}
                   />
                   <div className="p-4">
-                    <h3 className="text-lg font-semibold mb-2 hover:text-blue-600 transition-colors line-clamp-2">
+                    <h3 className="text-lg font-semibold mb-2 hover:text-[#1d2d44] transition-colors line-clamp-2">
                       {article.title}
                     </h3>
                     <p className="text-gray-500 text-sm mb-2">{new Date(article.publishedAt).toLocaleDateString()}</p>
@@ -176,7 +176,7 @@ const Sports = () => {
                       href={article.url} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="text-blue-600 text-sm font-medium hover:text-blue-800 transition-colors"
+                      className="text-[#1d2d44] text-sm font-medium hover:text-[#748cab] transition-colors"
                     >
                       Read more →
                     </a>
@@ -206,7 +206,7 @@ const Sports = () => {
                     }}
                   />
                   <div>
-                    <h4 className="font-medium text-gray-800 hover:text-blue-600 transition-colors line-clamp-2">
+                    <h4 className="font-medium text-gray-800 hover:text-[#1d2d44] transition-colors line-clamp-2">
                       {article.title}
                     </h4>
                     <p className="text-gray-500 text-xs mt-1">{new Date(article.publishedAt).toLocaleDateString()}</p>
@@ -214,7 +214,7 @@ const Sports = () => {
                       href={article.url} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="text-blue-600 text-xs font-medium hover:text-blue-800 transition-colors mt-2 block"
+                      className="text-[#1d2d44] text-xs font-medium hover:text-[#748cab] transition-colors mt-2 block"
                     >
                       Read more →
                     </a>
@@ -265,7 +265,7 @@ const Sports = () => {
                     href={activeArticle.url} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                    className="bg-[#1d2d44] text-white px-6 py-2 rounded-lg hover:bg-[#778da9] transition-colors"
                   >
                     Read full story
                   </a>
@@ -288,14 +288,17 @@ const Sports = () => {
     <div className="min-h-screen bg-gray-50">
       <Navbar />
       <div className="mx-auto px-4 py-8 w-10/12">
-        <motion.h1 
-          className="text-4xl font-bold mb-8 text-gray-900"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
+        <motion.div
+          className="flex justify-center items-center mb-6"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          Sports News
-        </motion.h1>
+          <h1 className="text-4xl pb-2  font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[#1d2d44] to-[#748cab]">
+            Sports News
+          </h1>
+          <div className="ml-4 h-px flex-grow bg-gradient-to-r from-[#1d2d44] to-transparent"></div>
+        </motion.div>
         
         {loading ? renderSkeletonLoader() : renderNewsContent()}
       </div>
