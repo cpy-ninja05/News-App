@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const NewsSection = ({ category = "technology", apiKey, title = "TECHNOLOGY NEWS" }) => {
   const [articles, setArticles] = useState([]);
@@ -80,10 +80,10 @@ const NewsSection = ({ category = "technology", apiKey, title = "TECHNOLOGY NEWS
         </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid h-85  grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {articles.map((article, index) => (
           <div key={index} className="flex flex-col h-full">
-            <div className="h-48 mb-3 overflow-hidden rounded-lg">
+            <div className="h-60 mb-3 overflow-hidden rounded-lg">
               <img 
                 src={article.urlToImage || "https://static.vecteezy.com/system/resources/thumbnails/043/995/022/small/banner-for-news-feeds-and-headlines-for-tv-or-internet-needs-photo.jpg"} 
                 alt={article.title || "News image"} 
@@ -92,7 +92,7 @@ const NewsSection = ({ category = "technology", apiKey, title = "TECHNOLOGY NEWS
               />
             </div>
             <div className="flex-grow">
-              <h3 className="font-semibold text-sm mb-1 line-clamp-2">
+              <h3 className="font-semibold text-md mb-1 line-clamp-2">
                 {truncateText(article.title, 60)}
               </h3>
               <p className="text-xs text-gray-500 mb-1">{article.source?.name}</p>

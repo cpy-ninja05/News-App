@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar.jsx';
 import NewsSection from '../components/NewsSection.jsx';
 
@@ -56,12 +56,12 @@ const Home = () => {
       <Navbar />
       
       {/* Trending News Carousel */}
-      <div className="relative overflow-hidden bg-white shadow-lg mx-auto my-8 max-w-7xl rounded-xl">
+      <div className="relative overflow-hidden bg-white shadow-lg mx-auto my-8 w-10/12 rounded-xl">
         {isLoading ? (
-          <div className="h-[500px] animate-pulse bg-gray-200 rounded-xl" />
+          <div className="h-[600px] animate-pulse bg-gray-200 rounded-xl" />
         ) : (
           <>
-            <div className="relative h-[500px]">
+            <div className="relative h-[600px]">
               {trendingNews.map((article, index) => (
                 <div
                   key={index}
@@ -124,7 +124,7 @@ const Home = () => {
       </div>
 
       {/* Category News Sections */}
-      <div className="max-w-7xl mx-auto px-4 space-y-8 mb-8">
+      <div className="w-10/12 mx-auto px-4 space-y-8 mb-8">
         {selectedCategories.map((category) => (
           <NewsSection
             key={category}
