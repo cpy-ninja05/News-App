@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import common from "../assets/Images/common.jpeg"; // Placeholder image
+import common from "../assets/Images/common.jpeg";
+
 const NewsSection = ({ category = "technology", apiKey, title = "TECHNOLOGY NEWS", onArticleClick }) => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -19,7 +20,7 @@ const NewsSection = ({ category = "technology", apiKey, title = "TECHNOLOGY NEWS
         }
         
         const data = await response.json();
-        setArticles(data.articles.slice(0, 4)); // Get first 4 articles
+        setArticles(data.articles.slice(0, 4));
         setLoading(false);
       } catch (err) {
         setError(err.message);
@@ -30,23 +31,18 @@ const NewsSection = ({ category = "technology", apiKey, title = "TECHNOLOGY NEWS
     fetchNews();
   }, [category, apiKey]);
 
-  // Function to format date
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'short', day: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
-  // Function to truncate text to a specific length
   const truncateText = (text, maxLength) => {
     if (!text) return "";
     return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
   };
 
-  // Handler for article click
   const handleArticleClick = (article) => {
-    if (onArticleClick) {
-      onArticleClick(article);
-    }
+    navigate('/article', { state: { article } });
   };
 
   if (loading) {
@@ -101,7 +97,7 @@ const NewsSection = ({ category = "technology", apiKey, title = "TECHNOLOGY NEWS
           >
             <div className="h-60 mb-3 overflow-hidden rounded-lg">
               <img 
-                src={article.urlToImage || common } 
+                src={article.urlToImage || common} 
                 alt={article.title || "News image"} 
                 onError={(e) => {e.target.src = "/api/placeholder/400/320"}}
                 className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
@@ -112,22 +108,22 @@ const NewsSection = ({ category = "technology", apiKey, title = "TECHNOLOGY NEWS
                 {truncateText(article.title, 60)}
               </h3>
               <p className="text-xs text-gray-500 mb-1">{article.source?.name}</p>
-              <div class="flex justify-between ">
+              <div className="flex justify-between">
                 <p className="text-xs text-gray-400">
                   {article.publishedAt ? formatDate(article.publishedAt) : ""}
                 </p>
-                <div className=" flex ">
+                <div className="flex">
                   <a 
-                  href={article.url} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-sm -mt-1 font-bold text-gray-500 hover:text-gray-700"
-                  onClick={(e) => e.stopPropagation()}
+                    href={article.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-sm -mt-1 font-bold text-gray-500 hover:text-gray-700"
+                    onClick={(e) => e.stopPropagation()}
                   >
-                  Read more
+                    Read more
                   </a>
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </div>
               </div>
