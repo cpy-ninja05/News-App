@@ -1,139 +1,100 @@
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import common from "../assets/Images/common.jpeg"; // Placeholder image
-const NewsSection = ({ category = "technology", apiKey, title = "TECHNOLOGY NEWS", onArticleClick }) => {
-  const [articles, setArticles] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+import common from '../assets/Images/common.jpeg';
+
+const NewsSection = ({ category, apiKey, title, onArticleClick }) => {
+  const [news, setNews] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchNews = async () => {
+    const fetchCategoryNews = async () => {
       try {
         const response = await fetch(
-          `https://newsapi.org/v2/top-headlines?category=${category}&language=en&apiKey=${apiKey}`
+          `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${apiKey}`
         );
-        
-        if (!response.ok) {
-          throw new Error("Failed to fetch news");
-        }
-        
         const data = await response.json();
-        setArticles(data.articles.slice(0, 4)); // Get first 4 articles
-        setLoading(false);
-      } catch (err) {
-        setError(err.message);
-        setLoading(false);
+        setNews(data.articles.slice(0, 6));
+        setIsLoading(false);
+      } catch (error) {
+        console.error(`Error fetching ${category} news:`, error);
+        setIsLoading(false);
       }
     };
 
-    fetchNews();
+    fetchCategoryNews();
   }, [category, apiKey]);
 
-  // Function to format date
-  const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: 'short', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString(undefined, options);
-  };
-
-  // Function to truncate text to a specific length
-  const truncateText = (text, maxLength) => {
-    if (!text) return "";
-    return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
-  };
-
-  // Handler for article click
-  const handleArticleClick = (article) => {
-    navigate('/article', { state: { article } });
-  };
-
-  if (loading) {
+  if (isLoading) {
     return (
-      <div className="w-full p-6 bg-white rounded-lg shadow">
-        <h2 className="text-xl font-bold text-gray-800 mb-4">{title}</h2>
-        <div className="animate-pulse">
-          {[...Array(4)].map((_, i) => (
-            <div key={i} className="mb-6">
-              <div className="h-48 bg-gray-200 rounded-lg mb-3"></div>
-              <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
-              <div className="h-4 bg-gray-200 rounded w-1/2"></div>
-            </div>
+      <div className="space-y-4">
+        <div className="h-8 bg-gray-200 rounded w-1/4 animate-pulse"></div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {[...Array(6)].map((_, i) => (
+            <div key={i} className="bg-gray-200 h-64 rounded-lg animate-pulse"></div>
           ))}
         </div>
       </div>
     );
   }
 
-  if (error) {
-    return (
-      <div className="w-full p-6 bg-white rounded-lg shadow">
-        <h2 className="text-xl font-bold text-gray-800 mb-4">{title}</h2>
-        <div className="p-4 text-red-500 bg-red-50 rounded-lg">
-          Error loading news: {error}. Please check your API key or try again later.
-        </div>
-      </div>
-    );
+  if (news.length === 0) {
+    return null;
   }
 
   return (
-    <div className="w-full h-120 p-6 bg-white rounded-lg shadow">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-bold text-gray-800">{title}</h2>
-        <button 
-          className="text-sm text-gray-500 hover:text-gray-800 flex items-center"
-          onClick={() => navigate(`/${category.toLowerCase()}`)}
-        >
-          View all
-          <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
-          </svg>
-        </button>
-      </div>
+    <section>
+      <motion.div
+        className="flex justify-start items-center mb-4"
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <h2 className="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#1d2d44] to-[#748cab]">
+          {title}
+        </h2>
+        <div className="ml-4 h-px flex-grow bg-gradient-to-r from-[#1d2d44] to-transparent"></div>
+      </motion.div>
 
-      <div className="grid h-85 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {articles.map((article, index) => (
-          <div 
-            key={index} 
-            className="flex flex-col h-full bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 cursor-pointer"
-            onClick={() => handleArticleClick(article)}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {news.map((article, index) => (
+          <motion.div
+            key={index}
+            className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: index * 0.1 }}
           >
-            <div className="h-60 mb-3 overflow-hidden rounded-lg">
-              <img 
-                src={article.urlToImage || common } 
-                alt={article.title || "News image"} 
-                onError={(e) => {e.target.src = "/api/placeholder/400/320"}}
-                className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+            <div className="overflow-hidden">
+              <img
+                src={article.urlToImage || common}
+                alt={article.title}
+                className="w-full h-48 object-cover transform transition-transform duration-300 hover:scale-110"
+                onError={(e) => {
+                  e.target.src = common;
+                }}
               />
             </div>
-            <div className="flex-grow p-3">
-              <h3 className="font-semibold text-md mb-1 line-clamp-2 hover:text-[#1d2d44] transition-colors">
-                {truncateText(article.title, 60)}
-              </h3>
-              <p className="text-xs text-gray-500 mb-1">{article.source?.name}</p>
-              <div class="flex justify-between ">
-                <p className="text-xs text-gray-400">
-                  {article.publishedAt ? formatDate(article.publishedAt) : ""}
-                </p>
-                <div className=" flex ">
-                  <a 
-                  href={article.url} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-sm -mt-1 font-bold text-gray-500 hover:text-gray-700"
-                  onClick={(e) => e.stopPropagation()}
-                  >
-                  Read more
-                  </a>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
+            <div className="p-4">
+              <h3 className="font-semibold text-lg mb-2 line-clamp-2">{article.title}</h3>
+              <p className="text-gray-600 text-sm mb-3 line-clamp-2">{article.description}</p>
+              <div className="flex justify-between items-center">
+                <span className="text-xs text-gray-500">
+                  {article.source?.name || "Unknown Source"}
+                </span>
+                <button
+                  onClick={() => navigate("/article", { state: { article } })}
+                  className="text-sm px-3 py-1 text-black hover:text-[#748cab] transition-colors"
+                >
+                  Read More
+                </button>
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 
