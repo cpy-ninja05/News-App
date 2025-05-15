@@ -2,8 +2,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Menu, Search, X } from "lucide-react";
 import { useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
+  const navigate = useNavigate();
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -43,6 +45,7 @@ function Navbar() {
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     // Handle search functionality here
+    navigate(`/${searchQuery}`);
     console.log("Searching for:", searchQuery);
     // Clear the input and hide search after submission
     setSearchQuery("");

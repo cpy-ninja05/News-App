@@ -7,6 +7,7 @@ import Home from './pages/Home.jsx';
 import LoginAndRegister from './pages/LoginAndRegister.jsx';
 import Preferences from './pages/Preferences.jsx';
 import Science from './pages/Science.jsx';
+import SearchResult from './pages/SearchResult.jsx';
 import Sports from './pages/Sports.jsx';
 import Technology from './pages/Technology.jsx';
 
@@ -25,6 +26,7 @@ function App() {
         <Route path="/science" element={<Science />} />
         <Route path="/sports" element={<Sports />} />
         <Route path="/technology" element={<Technology />} />
+        <Route path="/:searchQuery" element={<SearchResult />} />
       </Routes>
     </Router>
   );
