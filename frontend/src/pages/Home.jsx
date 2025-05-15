@@ -3,14 +3,14 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar.jsx';
 import NewsSection from '../components/NewsSection.jsx';
-
+import { useNavigate } from 'react-router-dom';
 const Home = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [trendingNews, setTrendingNews] = useState([]);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [activeArticle, setActiveArticle] = useState(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -85,7 +85,7 @@ const Home = () => {
                       <p className="text-gray-200 line-clamp-2 mb-4">{article.description}</p>
                       <div className="flex gap-4">
                         <button
-                          onClick={() => setActiveArticle(article)}
+                          onClick={() => navigate('/article', { state: { article } })}
                           className="inline-block bg-white text-black px-6 py-2 rounded-full hover:bg-gray-100 transition-colors"
                         >
                           View Details
@@ -140,7 +140,7 @@ const Home = () => {
         ))}
       </div>
 
-      {/* Article detail modal */}
+      {/* Article detail modal
       {activeArticle && (
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
           <div 
@@ -194,7 +194,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

@@ -2,13 +2,13 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import science from '../assets/Images/Science.jpg'; // Add a placeholder image for science
 import Navbar from '../components/Navbar';
-
+import { useNavigate } from 'react-router-dom';
 const Science = () => {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeArticle, setActiveArticle] = useState(null);
   const [currentCategory, setCurrentCategory] = useState('all');
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchNews = async () => {
       try {
@@ -158,7 +158,7 @@ const Science = () => {
           <motion.div 
             className="relative rounded-xl overflow-hidden h-96 mb-12 group shadow-lg"
             variants={itemVariants}
-            onClick={() => setActiveArticle(featuredArticle)}
+            onClick={() => navigate('/article', { state: { article: featuredArticle } })}
           >
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
             <img 
@@ -202,7 +202,7 @@ const Science = () => {
               key={index} 
               className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow"
               variants={itemVariants}
-              onClick={() => setActiveArticle(article)}
+              onClick={() => navigate('/article', { state: { article } })}
               whileHover={{ y: -5 }}
             >
               <div className="relative h-56 overflow-hidden">
@@ -262,7 +262,7 @@ const Science = () => {
                   key={index} 
                   className="bg-gradient-to-br from-teal-50 to-white p-4 rounded-xl shadow-md flex items-center gap-4 hover:shadow-lg transition-shadow"
                   variants={itemVariants}
-                  onClick={() => setActiveArticle(article)}
+                  onClick={() => navigate('/article', { state: { article } })}
                   whileHover={{ scale: 1.02 }}
                 >
                   <img 
@@ -287,7 +287,7 @@ const Science = () => {
           </div>
         )}
 
-        {/* Article detail modal */}
+        {/* Article detail modal
         {activeArticle && (
           <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
             <motion.div 
@@ -353,7 +353,7 @@ const Science = () => {
               </div>
             </motion.div>
           </div>
-        )}
+        )} */}
       </motion.div>
     );
   };

@@ -44,9 +44,7 @@ const NewsSection = ({ category = "technology", apiKey, title = "TECHNOLOGY NEWS
 
   // Handler for article click
   const handleArticleClick = (article) => {
-    if (onArticleClick) {
-      onArticleClick(article);
-    }
+    navigate('/article', { state: { article } });
   };
 
   if (loading) {

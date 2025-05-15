@@ -2,12 +2,12 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import sports from '../assets/Images/sports.jpg';
 import Navbar from '../components/Navbar';
-
+import { useNavigate } from 'react-router-dom';
 const Sports = () => {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeArticle, setActiveArticle] = useState(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchNews = async () => {
       try {
@@ -118,7 +118,7 @@ const Sports = () => {
             <motion.div 
               className="bg-white rounded-lg shadow-md overflow-hidden transition-shadow hover:shadow-lg"
               variants={itemVariants}
-              onClick={() => setActiveArticle(mainArticle)}
+              onClick={() => navigate('/article', { state: { article: mainArticle } })}
             >
               <div className="relative">
                 <img 
@@ -157,7 +157,7 @@ const Sports = () => {
                   key={index} 
                   className=" bg-white rounded-lg shadow-md overflow-hidden transition-shadow hover:shadow-lg"
                   variants={itemVariants}
-                  onClick={() => setActiveArticle(article)}
+                  onClick={() => navigate('/article', { state: { article } })}
                 >
                   <img 
                     src={article.urlToImage || sports} 
@@ -194,7 +194,7 @@ const Sports = () => {
                 key={index} 
                 className="bg-white rounded-lg shadow-md p-4 transition-shadow hover:shadow-lg"
                 variants={itemVariants}
-                onClick={() => setActiveArticle(article)}
+                onClick={() => navigate('/article', { state: { article } })}
               >
                 <div className="flex">
                   <img 
@@ -225,7 +225,7 @@ const Sports = () => {
           </div>
         </div>
 
-        {/* Article detail modal */}
+        {/* Article detail modal
         {activeArticle && (
           <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
             <motion.div 
@@ -279,7 +279,7 @@ const Sports = () => {
               </div>
             </motion.div>
           </div>
-        )}
+        )} */}
       </motion.div>
     );
   };

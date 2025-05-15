@@ -1,4 +1,5 @@
 import { Navigate, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import Article from './pages/Article.jsx';
 import Business from './pages/Business.jsx';
 import Entertainment from './pages/Entertainment.jsx';
 import Health from './pages/Health.jsx';
@@ -17,6 +18,7 @@ function App() {
         <Route path="/loginandregister" element={<LoginAndRegister />} />
         <Route path="/preferences/:email" element={<Preferences />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/article" element={<Article />} />
         <Route path="/business" element={<Business />} />
         <Route path="/entertainment" element={<Entertainment />} />
         <Route path="/health" element={<Health />} />

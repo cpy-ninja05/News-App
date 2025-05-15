@@ -2,13 +2,13 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import healthBackground from '../assets/Images/health.jpg';
 import Navbar from '../components/Navbar';
-
+import { useNavigate } from 'react-router-dom';
 const Health = () => {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeArticle, setActiveArticle] = useState(null);
   const [currentCategory, setCurrentCategory] = useState('all');
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchNews = async () => {
       try {
@@ -221,7 +221,7 @@ const Health = () => {
           <motion.div 
             className="relative rounded-3xl overflow-hidden h-96 mb-12 group shadow-xl"
             variants={itemVariants}
-            onClick={() => setActiveArticle(featuredArticle)}
+            onClick={() => navigate('/article', { state: { article: featuredArticle } })}
           >
             <div className="absolute inset-0 z-10"></div>
             <img 
@@ -265,7 +265,7 @@ const Health = () => {
               key={index} 
               className="bg-white rounded-3xl shadow-md overflow-hidden hover:shadow-xl transition-all"
               variants={itemVariants}
-              onClick={() => setActiveArticle(article)}
+              onClick={() => navigate('/article', { state: { article } })}
               whileHover={{ y: -5 }}
             >
               <div className="relative h-56 overflow-hidden">
@@ -325,7 +325,7 @@ const Health = () => {
                   key={index} 
                   className="bg-white p-5 rounded-2xl shadow-sm flex gap-5 hover:shadow-md transition-shadow"
                   variants={itemVariants}
-                  onClick={() => setActiveArticle(article)}
+                  onClick={() => navigate('/article', { state: { article } })}
                   whileHover={{ scale: 1.02 }}
                 >
                   <img 
@@ -402,7 +402,7 @@ const Health = () => {
           </div>
         </div>
 
-        {/* Article detail modal */}
+        {/* Article detail modal
         {activeArticle && (
           <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
             <motion.div 
@@ -478,7 +478,7 @@ const Health = () => {
               </div>
             </motion.div>
           </div>
-        )}
+        )} */}
       </motion.div>
     );
   };
