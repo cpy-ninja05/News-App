@@ -1,4 +1,5 @@
 import { Navigate, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import UpdatePreferences from './components/UpdatePreferences.jsx';
 import Article from './pages/Article.jsx';
 import Business from './pages/Business.jsx';
 import Entertainment from './pages/Entertainment.jsx';
@@ -27,6 +28,7 @@ function App() {
         <Route path="/sports" element={<Sports />} />
         <Route path="/technology" element={<Technology />} />
         <Route path="/:searchQuery" element={<SearchResult />} />
+        <Route path="/update-preferences" element={<UpdatePreferences />} />
       </Routes>
     </Router>
   );

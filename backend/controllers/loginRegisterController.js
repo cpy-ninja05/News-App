@@ -138,5 +138,65 @@ const logoutUser = (req, res) => {
   });
 };
 
+const getPreferences = async (req, res) => {
+  try {
+    const userId = req.user._id; // or req.user.id depending on your token structure
+   
+    const user = await User.findById(userId);
+    
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found',
+      });
+    }
 
-export { loginUser, logoutUser, registerUser , updateUserPreferences};
+    res.status(200).json({
+      success: true,
+      preferences: user.newsPreferences || [] // Default to empty array if undefined
+    });
+    
+  } catch (error) {
+    console.error('Error in getPreferences:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error',
+    });
+  }
+};
+
+const changePreferences = async (req, res) => {
+  const { newsPreferences } = req.body;
+
+  try {
+    const userId = req.user._id; // or req.user.id depending on your token structure
+
+    const user = await User.findById(userId);
+    
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found',
+      });
+    }
+
+    // Update news preferences
+    user.newsPreferences = newsPreferences;
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Preferences updated successfully',
+    });
+    
+  } catch (error) {
+    console.error('Error in changePreferences:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error',
+    });
+  }
+};
+
+export { changePreferences, getPreferences, loginUser, logoutUser, registerUser, updateUserPreferences };
+

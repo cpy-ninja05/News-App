@@ -1,8 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, Search, X } from "lucide-react";
+import { Menu, Search, Settings, X } from "lucide-react";
 import { useRef, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -52,6 +51,10 @@ function Navbar() {
     setIsSearchVisible(false);
   };
 
+  const handlePreferencesClick = () => {
+    navigate("/update-preferences");
+  };
+
   // Close search when clicking outside
   const handleClickOutside = (e) => {
     if (isSearchVisible && searchInputRef.current && !searchInputRef.current.contains(e.target) && e.target.id !== "search-icon") {
@@ -73,7 +76,7 @@ function Navbar() {
 
   return (
     <div className="w-full font-serif">
-      {/* Top bar with date, search, and menu toggle */}
+      {/* Top bar with date, search, preferences, and menu toggle */}
       <div className="flex justify-between items-center px-4 py-2 border-b border-gray-200">
         <div className="text-gray-600 text-sm">{currentDate}</div>
         <div className="flex items-center space-x-4">
@@ -129,6 +132,19 @@ function Navbar() {
               onClick={handleSearchIconClick}
               size={20}
               className={`cursor-pointer ${isSearchVisible ? "text-blue-600" : "text-gray-600"}`}
+            />
+          </motion.div>
+          
+          {/* Preferences button */}
+          <motion.div
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Settings
+              onClick={handlePreferencesClick}
+              size={20}
+              className="cursor-pointer text-gray-600 hover:text-blue-600 transition-colors"
+              title="Update Preferences"
             />
           </motion.div>
           
@@ -217,6 +233,22 @@ function Navbar() {
                   </Link>
                 </motion.div>
               ))}
+              {/* Add preferences link to mobile menu */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: navItems.length * 0.05 }}
+              >
+                <button
+                  onClick={() => {
+                    handlePreferencesClick();
+                    setIsMenuOpen(false);
+                  }}
+                  className="transition-colors block py-2 text-gray-800 hover:text-blue-500 w-full text-left"
+                >
+                  Preferences
+                </button>
+              </motion.div>
             </motion.nav>
           )}
         </AnimatePresence>

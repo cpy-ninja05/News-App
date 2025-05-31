@@ -61,12 +61,13 @@ export default function RegisterCard({ switchToLogin }) {
     console.log('Registration data:', formData);
 
     try {
-      const response = await Axios.post('https://news-app-dcs5.onrender.com/register-login/register', formData);
+      // const response = await Axios.post('https://news-app-dcs5.onrender.com/register-login/register', formData);
+      const response = await Axios.post('http://localhost:3000/register-login/register', formData);
       console.log('Registration response:', response.data);
 
       if (response.data.success) {
         // Redirect to preferences page after successful registration
-        window.location.href = `register-login/preferences/${formData.email}`;
+        window.location.href = `/preferences/${formData.email}`;
       } else {
         // Handle registration error
         setErrors({ ...errors, server: response.data.message });

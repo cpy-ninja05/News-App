@@ -18,7 +18,8 @@ const Home = () => {
     const fetchCategories = async () => {
       try {
         const response = await Axios.get(
-          "https://news-app-dcs5.onrender.com/news/categories",
+          // "https://news-app-dcs5.onrender.com/news/categories",
+          "http://localhost:3000/news/categories",
           { withCredentials: true }
         );
         setSelectedCategories(response.data);

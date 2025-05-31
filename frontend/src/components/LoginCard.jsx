@@ -50,7 +50,8 @@ export default function LoginCard({ switchToRegister, onLoginSuccess }) {
     console.log('Login data:', formData);
 
     try {
-      const response = await Axios.post('https://news-app-dcs5.onrender.com/register-login/login', formData, {
+      // const response = await Axios.post('https://news-app-dcs5.onrender.com/register-login/login', formData, {
+      const response = await Axios.post('http://localhost:3000/register-login/login', formData, {
         headers: {
           'Content-Type': 'application/json',
         },
